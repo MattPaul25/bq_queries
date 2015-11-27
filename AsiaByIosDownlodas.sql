@@ -1,7 +1,8 @@
 SELECT
-    geo.country,
-    SUM(CASE WHEN product_type_identifier = '1F'THEN units END) Overall_Downloads,
-    SUM(CASE WHEN product_type_identifier = '7F' THEN units END) Overall_Updates
+    geo.country Country,
+    SUM(CASE WHEN product_type_identifier = '1F'THEN units END) Downloads,
+    SUM(CASE WHEN product_type_identifier = '7F' THEN units END) Updates
+    
   FROM
     [itunes.weekly_newsstand] tunes join each itunes.country_code_region geo
     on tunes.country_code=geo.country_Code
@@ -10,6 +11,6 @@ SELECT
     AND geo.region ="Asia Pacific" 
     AND (download_date > '2015-09-30' AND download_date < '2015-11-01')
   GROUP BY
-    geo.country
+    Country
   
-  ORDER BY Overall_Downloads desc
+  ORDER BY Downloads desc
